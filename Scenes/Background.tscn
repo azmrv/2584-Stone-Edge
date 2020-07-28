@@ -41,7 +41,7 @@ rect_min_size = Vector2( 500, 900 )
 rect_clip_content = true
 size_flags_horizontal = 3
 size_flags_vertical = 3
-color = Color( 0.113725, 0.337255, 0.333333, 1 )
+color = Color( 0.0431373, 0.172549, 0.0117647, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
