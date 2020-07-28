@@ -35,7 +35,7 @@ __meta__ = {
 [node name="TelosAds" type="VBoxContainer" parent="VBoxC"]
 show_behind_parent = true
 margin_right = 500.0
-margin_bottom = 62.0
+margin_bottom = 58.0
 size_flags_horizontal = 3
 
 [node name="Psyontech" type="LinkButton" parent="VBoxC/TelosAds"]
@@ -55,19 +55,16 @@ __meta__ = {
 
 [node name="GameName" type="Label" parent="VBoxC/TelosAds"]
 show_behind_parent = true
-margin_top = 35.0
+margin_top = 31.0
 margin_right = 500.0
-margin_bottom = 62.0
+margin_bottom = 58.0
 grow_horizontal = 0
 grow_vertical = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_fonts/font = ExtResource( 1 )
 custom_colors/font_color = Color( 0.772549, 0.772549, 0.772549, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_constants/shadow_offset_x = 2
-custom_constants/shadow_offset_y = 2
-text = "2584 Stone Edge"
+text = "2584 Fibonacci "
 align = 1
 valign = 1
 __meta__ = {
@@ -76,36 +73,36 @@ __meta__ = {
 
 [node name="Menu" type="HBoxContainer" parent="VBoxC"]
 show_behind_parent = true
-margin_top = 70.0
+margin_top = 62.0
 margin_right = 500.0
-margin_bottom = 150.0
+margin_bottom = 139.0
 size_flags_horizontal = 3
 
 [node name="VBox" type="VBoxContainer" parent="VBoxC/Menu"]
 show_behind_parent = true
 margin_right = 500.0
-margin_bottom = 80.0
+margin_bottom = 77.0
 size_flags_horizontal = 3
 alignment = 1
 
 [node name="Score" type="HBoxContainer" parent="VBoxC/Menu/VBox"]
 show_behind_parent = true
 margin_right = 500.0
-margin_bottom = 32.0
+margin_bottom = 33.0
 grow_horizontal = 2
 grow_vertical = 2
 rect_min_size = Vector2( 0, 30 )
 size_flags_horizontal = 3
 
 [node name="Container3" type="Container" parent="VBoxC/Menu/VBox/Score"]
-margin_right = 63.0
-margin_bottom = 32.0
+margin_right = 62.0
+margin_bottom = 33.0
 size_flags_horizontal = 3
 
 [node name="Score" type="Label" parent="VBoxC/Menu/VBox/Score"]
-margin_left = 71.0
-margin_right = 217.0
-margin_bottom = 32.0
+margin_left = 66.0
+margin_right = 221.0
+margin_bottom = 33.0
 custom_styles/normal = ExtResource( 3 )
 custom_fonts/font = ExtResource( 12 )
 custom_colors/font_color = Color( 0.772549, 0.772549, 0.772549, 1 )
@@ -118,14 +115,14 @@ valign = 1
 
 [node name="Container" type="Container" parent="VBoxC/Menu/VBox/Score"]
 margin_left = 225.0
-margin_right = 288.0
-margin_bottom = 32.0
+margin_right = 287.0
+margin_bottom = 33.0
 size_flags_horizontal = 3
 
 [node name="Best" type="Label" parent="VBoxC/Menu/VBox/Score"]
-margin_left = 296.0
-margin_right = 429.0
-margin_bottom = 32.0
+margin_left = 291.0
+margin_right = 434.0
+margin_bottom = 33.0
 custom_styles/normal = ExtResource( 3 )
 custom_fonts/font = ExtResource( 12 )
 custom_colors/font_color = Color( 0.772549, 0.772549, 0.772549, 1 )
@@ -137,16 +134,16 @@ align = 1
 valign = 1
 
 [node name="Container2" type="Container" parent="VBoxC/Menu/VBox/Score"]
-margin_left = 437.0
+margin_left = 438.0
 margin_right = 500.0
-margin_bottom = 32.0
+margin_bottom = 33.0
 size_flags_horizontal = 3
 
 [node name="Buttons" type="HBoxContainer" parent="VBoxC/Menu/VBox"]
 show_behind_parent = true
-margin_top = 40.0
+margin_top = 37.0
 margin_right = 500.0
-margin_bottom = 80.0
+margin_bottom = 77.0
 grow_horizontal = 2
 grow_vertical = 2
 rect_min_size = Vector2( 500, 40 )
@@ -160,8 +157,8 @@ rect_min_size = Vector2( 20, 0 )
 size_flags_vertical = 3
 
 [node name="Undo" type="Button" parent="VBoxC/Menu/VBox/Buttons"]
-margin_left = 28.0
-margin_right = 92.0
+margin_left = 24.0
+margin_right = 90.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 0, 40 )
 hint_tooltip = "Avaible after some ADs"
@@ -175,16 +172,16 @@ custom_colors/font_color = Color( 0.772549, 0.772549, 0.772549, 1 )
 text = "UNDO"
 
 [node name="Container" type="Container" parent="VBoxC/Menu/VBox/Buttons"]
-margin_left = 100.0
-margin_right = 174.0
+margin_left = 94.0
+margin_right = 179.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Help" type="Button" parent="VBoxC/Menu/VBox/Buttons"]
 show_behind_parent = true
-margin_left = 182.0
-margin_right = 282.0
+margin_left = 183.0
+margin_right = 283.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 100, 40 )
 size_flags_vertical = 3
@@ -197,8 +194,8 @@ custom_fonts/font = ExtResource( 12 )
 text = "Help"
 
 [node name="Container3" type="Container" parent="VBoxC/Menu/VBox/Buttons"]
-margin_left = 290.0
-margin_right = 364.0
+margin_left = 287.0
+margin_right = 372.0
 margin_bottom = 40.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -208,8 +205,8 @@ size_flags_vertical = 3
 
 [node name="MenuB" type="Button" parent="VBoxC/Menu/VBox/Buttons"]
 show_behind_parent = true
-margin_left = 372.0
-margin_right = 472.0
+margin_left = 376.0
+margin_right = 476.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 100, 40 )
 size_flags_vertical = 3
@@ -232,9 +229,9 @@ size_flags_vertical = 3
 
 [node name="GFContainer" type="CenterContainer" parent="VBoxC"]
 show_behind_parent = true
-margin_top = 158.0
+margin_top = 143.0
 margin_right = 500.0
-margin_bottom = 658.0
+margin_bottom = 643.0
 rect_min_size = Vector2( 500, 500 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -243,7 +240,7 @@ __meta__ = {
 }
 
 [node name="HelpH" type="HBoxContainer" parent="VBoxC"]
-margin_top = 666.0
+margin_top = 647.0
 margin_right = 500.0
 margin_bottom = 900.0
 rect_min_size = Vector2( 0, 50 )
@@ -252,13 +249,13 @@ size_flags_vertical = 3
 
 [node name="Container" type="Container" parent="VBoxC/HelpH"]
 margin_right = 10.0
-margin_bottom = 234.0
+margin_bottom = 253.0
 rect_min_size = Vector2( 10, 20 )
 
 [node name="HelpL" type="Label" parent="VBoxC/HelpH"]
-margin_left = 18.0
-margin_right = 482.0
-margin_bottom = 234.0
+margin_left = 14.0
+margin_right = 486.0
+margin_bottom = 253.0
 rect_min_size = Vector2( 400, 150 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -275,7 +272,7 @@ clip_text = true
 [node name="Container2" type="Container" parent="VBoxC/HelpH"]
 margin_left = 490.0
 margin_right = 500.0
-margin_bottom = 234.0
+margin_bottom = 253.0
 rect_min_size = Vector2( 10, 20 )
 
 [node name="ColorHelp" type="CenterContainer" parent="VBoxC"]
@@ -337,9 +334,22 @@ __meta__ = {
 
 [node name="Container2" type="Container" parent="Menu/CRect/CenterContainer/VBox"]
 margin_right = 400.0
-margin_bottom = 197.0
+margin_bottom = 92.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="GAME OVER" type="Button" parent="Menu/CRect/CenterContainer/VBox"]
+margin_top = 102.0
+margin_right = 400.0
+margin_bottom = 162.0
+rect_min_size = Vector2( 0, 60 )
+custom_styles/hover = ExtResource( 11 )
+custom_styles/pressed = ExtResource( 8 )
+custom_styles/focus = ExtResource( 7 )
+custom_styles/disabled = ExtResource( 10 )
+custom_styles/normal = ExtResource( 9 )
+custom_fonts/font = ExtResource( 5 )
+text = "GAME OVER"
 
 [node name="AI" type="Button" parent="Menu/CRect/CenterContainer/VBox"]
 margin_top = 172.0
@@ -369,9 +379,9 @@ custom_fonts/font = ExtResource( 5 )
 text = "Options"
 
 [node name="ToggleTheme" type="Button" parent="Menu/CRect/CenterContainer/VBox"]
-margin_top = 172.0
+margin_top = 242.0
 margin_right = 400.0
-margin_bottom = 232.0
+margin_bottom = 302.0
 rect_min_size = Vector2( 0, 60 )
 custom_styles/hover = ExtResource( 11 )
 custom_styles/pressed = ExtResource( 8 )
@@ -384,9 +394,9 @@ pressed = true
 text = "Theme Bright"
 
 [node name="ClickMode" type="Button" parent="Menu/CRect/CenterContainer/VBox"]
-margin_top = 207.0
+margin_top = 312.0
 margin_right = 400.0
-margin_bottom = 267.0
+margin_bottom = 372.0
 rect_min_size = Vector2( 0, 60 )
 custom_styles/hover = ExtResource( 11 )
 custom_styles/pressed = ExtResource( 8 )
@@ -426,9 +436,9 @@ custom_fonts/font = ExtResource( 5 )
 text = "8 x 8"
 
 [node name="Share" type="Button" parent="Menu/CRect/CenterContainer/VBox"]
-margin_top = 277.0
+margin_top = 382.0
 margin_right = 400.0
-margin_bottom = 337.0
+margin_bottom = 442.0
 rect_min_size = Vector2( 0, 60 )
 custom_styles/hover = ExtResource( 11 )
 custom_styles/pressed = ExtResource( 8 )
@@ -439,9 +449,9 @@ custom_fonts/font = ExtResource( 5 )
 text = "Share"
 
 [node name="Restart" type="Button" parent="Menu/CRect/CenterContainer/VBox"]
-margin_top = 347.0
+margin_top = 452.0
 margin_right = 400.0
-margin_bottom = 407.0
+margin_bottom = 512.0
 rect_min_size = Vector2( 0, 60 )
 custom_styles/hover = ExtResource( 11 )
 custom_styles/pressed = ExtResource( 8 )
@@ -452,7 +462,7 @@ custom_fonts/font = ExtResource( 5 )
 text = "Restart"
 
 [node name="Container3" type="Container" parent="Menu/CRect/CenterContainer/VBox"]
-margin_top = 417.0
+margin_top = 522.0
 margin_right = 400.0
 margin_bottom = 614.0
 size_flags_horizontal = 3
@@ -530,17 +540,14 @@ margin_right = 400.0
 margin_bottom = 700.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_fonts/normal_font = ExtResource( 5 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 2
 custom_constants/shadow_offset_y = 2
 text = "The movement of numbers on the playing field for four sides, does by swipe.
-
 The adjacent numbers of the Fibonacci series are interconnected. 
-
 Example: 1 connected with 2, 2 - 3, 3 - 5, 5 - 8, 8 - 13, 13 - 21, 21 - 34, 34 - 55 &etc.
-
 Fibonacci  sequence 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765, 10946, 17711 ...
-
 In which the first two numbers are either 1 and 1, or 0 and 1, and each subsequent number is equal to the sum of the two previous numbers."
 
 [node name="Container3" type="Container" parent="HelpM/CRect/CenterContainer/VBox"]
@@ -566,6 +573,7 @@ text = "Close Help"
 [connection signal="pressed" from="VBoxC/Menu/VBox/Buttons/Undo" to="." method="_on_Undo_pressed"]
 [connection signal="pressed" from="VBoxC/Menu/VBox/Buttons/Help" to="." method="_on_Help_pressed"]
 [connection signal="pressed" from="VBoxC/Menu/VBox/Buttons/MenuB" to="." method="_on_MenuB_pressed"]
+[connection signal="pressed" from="Menu/CRect/CenterContainer/VBox/GAME OVER" to="." method="gameover"]
 [connection signal="pressed" from="Menu/CRect/CenterContainer/VBox/AI" to="." method="_on_AI_pressed"]
 [connection signal="pressed" from="Menu/CRect/CenterContainer/VBox/Options" to="." method="_on_Options_pressed"]
 [connection signal="pressed" from="Menu/CRect/CenterContainer/VBox/ToggleTheme" to="." method="_on_ToggleTheme_pressed"]

@@ -12,7 +12,7 @@ var swipe_start = null
 var minimum_drag = 100
 var swipe = null
 
-onready var admob = $AdMob
+#onready var admob = $AdMob
 #onready var debug_out = null #$CanvasLayer/DebugOut
 
 func _ready() -> void:
@@ -39,8 +39,7 @@ func setup():
 
 
 
-func _input(event):
-	Main.undo_game_field = Main.game_field
+func _input(event):	
 	if (Main.new_game != 0) && (Main.clickInput == true):
 		#print("_input(event)", event)
 		if(Input.is_action_just_pressed("ui_touch")):
@@ -65,7 +64,7 @@ func _input(event):
 #			else:
 #			  _calculate_swipe(event.get_position())
 
-func _calculate_swipe(swipe_end):
+func _calculate_swipe(swipe_end):	
 	if swipe_start == null: 
 		return
 	var swipe = swipe_end - swipe_start
@@ -81,6 +80,7 @@ func _calculate_swipe(swipe_end):
 			Main.move_up(Main.game_field)
 
 func calculate_direction():
+	
 	var k_scr = (game_window_heigth_y - game_window_width_x)/2
 #	print("calculate_direction()")
 #	print("y =", final_touch.y, " x =", final_touch.x)	
