@@ -12,7 +12,7 @@
 [ext_resource path="res://Styles/GUI.tres" type="StyleBox" id=10]
 
 [sub_resource type="DynamicFont" id=1]
-size = 70
+size = 60
 font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=2]
@@ -45,18 +45,24 @@ __meta__ = {
 [node name="VBoxLabels" type="VBoxContainer" parent="VBox"]
 show_behind_parent = true
 margin_right = 500.0
-margin_bottom = 712.0
-size_flags_horizontal = 11
-size_flags_vertical = 11
+margin_bottom = 704.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 size_flags_stretch_ratio = 128.0
 custom_constants/separation = 30
 alignment = 1
 
 [node name="GameStatus" type="Label" parent="VBox/VBoxLabels"]
 margin_right = 500.0
-margin_bottom = 92.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 500, 80 )
+size_flags_horizontal = 3
+size_flags_vertical = 1
 custom_fonts/font = SubResource( 1 )
-text = "Game Over"
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 4
+custom_constants/shadow_offset_y = 4
+text = "You can do it!"
 align = 1
 valign = 1
 __meta__ = {
@@ -64,9 +70,11 @@ __meta__ = {
 }
 
 [node name="ScoreTable" type="RichTextLabel" parent="VBox/VBoxLabels"]
-margin_top = 122.0
+margin_top = 110.0
 margin_right = 500.0
-margin_bottom = 712.0
+margin_bottom = 704.0
+rect_min_size = Vector2( 500, 0 )
+rect_clip_content = false
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/normal = ExtResource( 10 )
@@ -77,15 +85,14 @@ custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 2
 custom_constants/shadow_offset_y = 2
 bbcode_enabled = true
-bbcode_text = "TEXT1 "
-text = "TEXT1 "
+scroll_active = false
 scroll_following = true
 
 [node name="VBoxB" type="VBoxContainer" parent="VBox"]
 show_behind_parent = true
-margin_top = 716.0
+margin_top = 712.0
 margin_right = 500.0
-margin_bottom = 796.0
+margin_bottom = 792.0
 rect_min_size = Vector2( 500, 80 )
 size_flags_horizontal = 3
 size_flags_vertical = 11
@@ -144,7 +151,6 @@ wait_time = 3.0
 one_shot = true
 
 [node name="PopUp" type="PopupMenu" parent="."]
-show_behind_parent = true
 light_mask = 0
 margin_right = 20.0
 margin_bottom = 20.0

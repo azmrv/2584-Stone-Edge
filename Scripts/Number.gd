@@ -8,10 +8,12 @@ signal change_number
 # onready var alpha = get_node("alpha_tween")
 # onready var timer = get_node("destroy_timer")
 var is_number_exist = false
-var number = 0
+var number = null
 var mas_coord = 0
 
 var colors = []
+
+var is_2584 = false
 
 var curry_row = 0
 var currx_col = 0
@@ -37,10 +39,44 @@ func set_number_to_label(num : int):
 
 #func _process(delta):	
 #
+func number_plate_signal():
+	#играть музыку мигать фонариками запускать фейерверки	 
+	#print("number_plate_signal")
+	Main.show_message("Congratulation! \n You have achieved 2584!")	
+	for i in 40:
+		$CenterContainer/ColorRect.color = ("ff0000")
+		yield(get_tree().create_timer(0.01), "timeout")
+		$CenterContainer/ColorRect.color = ("00ff00")
+		yield(get_tree().create_timer(0.01), "timeout")
+		$CenterContainer/ColorRect.color = ("0000ff")
+		yield(get_tree().create_timer(0.01), "timeout")
 
+
+func do_graz_2584():
+#	print("pozdr s 2584")
+	if (is_2584 == true) and (Main.fibarr.has(number)):
+		number_plate_signal()
+		is_2584 = false
+		Main.reasign_numbers_on_gamefield()
+	else:
+		return
+	
+
+
+func do_graz_adsoff():
+	print("pozdr s 7778742049 no ads for you")
+	
+
+
+func check_gz():
+	if Main.fibarr.has(number):
+		is_2584 == true
+	
 
 
 func set_empty_number():
+	is_2584 = false
+	check_gz()
 	$CenterContainer/Label.text = ''
 	is_number_exist = null
 	number = null
@@ -51,6 +87,8 @@ func set_number_fonts_size():
 	pass
 
 func set_number_text(text):
+	is_2584 = false
+	check_gz()
 	$CenterContainer/Label.text = text
 	is_number_exist = 1
 	number = null
@@ -58,11 +96,14 @@ func set_number_text(text):
 	
 func setup_number_rect(size : Vector2):
 	#print("Number setup()")
+	is_2584 = false
+	check_gz()
 	$CenterContainer.rect_min_size = (size - Vector2(4,4))
 	$CenterContainer/ColorRect.rect_min_size = (size - Vector2(4,4))
 	$CenterContainer/Label.rect_min_size = (size - Vector2(4,4))
 	set_color()
 	#print("set number size = %s" %  size)
+
 
 
 # func enter_scene():
@@ -256,6 +297,7 @@ func set_color_dyn():
 	pass
 
 func set_color():
+	check_gz()
 	if Main.is_dark == true:
 		set_color_darker()
 	else:
@@ -326,60 +368,61 @@ func set_color_darker():
 	
 
 
+
 func set_color_bright():
 	#print("set_color() number =", number)
 	#0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765, 10946, 17711
 	if number == null:				
 		select_node_to_color(Color( 0.5, 0.51, 0.43, 0.3 ))
 	elif number == 1 :
-		select_node_to_color("8e7474")
+		select_node_to_color("fb7d7d")
 	elif number == 2 :
-		select_node_to_color("945959")
+		select_node_to_color("ee9052")
 	elif number == 3 :
-		select_node_to_color("cf5317")
+		select_node_to_color("eec352")
 	elif number == 5 :
-		select_node_to_color("cf6917")
+		select_node_to_color("edee52")
 	elif number == 8 :
-		select_node_to_color("cf8717")
+		select_node_to_color("a4ee52")
 	elif number == 13 :
-		select_node_to_color("cfaa17")
+		select_node_to_color("62ee52")
 	elif number == 21 :
-		select_node_to_color("c1cf17")
+		select_node_to_color("52ee96")
 	elif number == 34 :
-		select_node_to_color("abcf17")
+		select_node_to_color("52eedf")
 	elif number == 55 :
-		select_node_to_color("8dcf17")
+		select_node_to_color("528fee")
 	elif number == 89 :
-		select_node_to_color("5dcf17")
+		select_node_to_color("5e52ee")
 	elif number == 144 :
-		select_node_to_color("18cf17")
+		select_node_to_color("a752ee")
 	elif number == 233 :
-		select_node_to_color("17cf4e")	
+		select_node_to_color("ee52e1")	
 	elif number == 377 :
-		select_node_to_color("17cf86")	
+		select_node_to_color("ee528d")	
 	elif number == 610 :
-		select_node_to_color("17cfbe")	
+		select_node_to_color("ff2929")	
 	elif number == 987 :
-		select_node_to_color("178ecf")	
+		select_node_to_color("ff9229")	
 	elif number == 1597 :
-		select_node_to_color("1752cf")	
-	elif number == 2584 :
-		select_node_to_color("2117cf")	
+		select_node_to_color("fff729")	
+	elif number == 2584 :		
+		select_node_to_color("76ff29")		
 	elif number == 4181 :
-		select_node_to_color("6217cf")
+		select_node_to_color("29fff5")
 	elif number == 6765 :
-		select_node_to_color("9a17cf")
+		select_node_to_color("2959ff")
 	elif number == 10946 :
-		select_node_to_color("cf17a5")
+		select_node_to_color("9429ff")
 	elif number == 17711 :
-		select_node_to_color("cf1765")			
+		select_node_to_color("ff29e3")
 	elif number == -377 :
-		select_node_to_color("9a17cf")
+		select_node_to_color("9403cf")
 	elif number == -610 :
-		select_node_to_color("cf17a5")
-	elif number == -982 :
-		select_node_to_color("cf1765")	
+		select_node_to_color("d6048a")
+	elif number == -987 :
+		select_node_to_color("d6056c")	
 	
 	else:
-		select_node_to_color("cf1739")
+		select_node_to_color("004cff")
 	
