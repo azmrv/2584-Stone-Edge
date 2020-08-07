@@ -65,7 +65,7 @@ func _input(event):
 #			else:
 #			  _calculate_swipe(event.get_position())
 
-func _calculate_swipe(swipe_end):
+func _calculate_swipe(swipe_end):	
 	if swipe_start == null: 
 		return
 	var swipe = swipe_end - swipe_start
@@ -81,6 +81,7 @@ func _calculate_swipe(swipe_end):
 			Main.move_up(Main.game_field)
 
 func calculate_direction():
+	
 	var k_scr = (game_window_heigth_y - game_window_width_x)/2
 #	print("calculate_direction()")
 #	print("y =", final_touch.y, " x =", final_touch.x)	

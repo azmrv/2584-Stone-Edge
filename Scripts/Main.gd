@@ -52,7 +52,8 @@ var number_size = 80
 
 var clickInput = false
 
-const game_field_size = 5
+const game_field_size = 5 
+
 var hard_level = 3
 var iq_level = 0
 var new_game_numbers = 3
@@ -67,21 +68,14 @@ var text_color = "363636"
 var summ = 0
 
 var sumb = 0
+var kodurv = 3
 var eend = 4
 var koldop = 2
-var kodn
-var pst = 0.05
-var kodurv = 3
+#var kodn
 
-# for testing old value = 1, 2
-var number_one = 1
-var number_two = 2
-var number_three = 3
-var number_four = 4
-var number_five = 5
-
-var is_undo_copied = false
 var undo_game_field = null
+var is_undo_copied = false
+
 var game_field = [[],[]]
 
 var probability_of_num_one = 0.72
@@ -100,12 +94,20 @@ var current_score = 0
 var best_score = 0
 var scores_dict = {"1st    ": 1134903170, "2st    ": 832040, "3st    ": 317811, "4st    ": 46368, "5st    ": 10946, "6st    ": 2584, "7st    ": 987, "8st    ": 377, "9st    ": 233, "10st  ": 144}																																																   
 var fibarr = [2584, 4181, 6765, 10946, 17711, 28657, 46368, 75025, 121393, 196418, 317811, 514229, 832040, 1346269, 2178309, 3524578, 5702887, 9227465, 14930352, 24157817, 39088169, 63245986, 102334155, 165580141, 267914296, 433494437, 701408733, 1134903170, 1836311903, 2971215073, 4807526976, 7778742049]
+
 var show_ads = false
 
 var new_game = 0
 var is_plaing = false
 var number_rect_size = null
 var number_scene_pos = 0
+# for testing old value = 1, 2
+var number_one = 1
+var number_two = 2
+var number_three = 3
+var number_four = 4
+var number_five = 5
+
 
 func _ready():
 #	print("_ready()")
@@ -176,7 +178,7 @@ func new_game():
 		Utility.load_game()		
 	is_newgame = true
 	background_node.set_visible(true)
-	undo_game_field = null				   
+	undo_game_field = null
 	new_game = 1	
 	is_plaing = true
 	game_field = make_matrix()
@@ -267,6 +269,7 @@ func show_logo():
 	telosgames_logo_node.set_visible(true)
 
 
+
 func show_ads():
 	print("Main show_ads()")
 	show_ads = true
@@ -347,11 +350,10 @@ func make_matrix():
 
 
 func generate_new_numbers_in_array():
-	#print("Main generate_new_numbers_in_array()")
+	var kodn
 	randgen.randomize()
 	kodn = koldop
 	while kodn > 0:
-		#var y = int(ny * game_field_size % 1)	
 		var colx = randgen.randi_range(0,game_field_size - 1)
 		var rowy = randgen.randi_range(0,game_field_size - 1)	
 		#print(rowy, colx)
@@ -404,8 +406,8 @@ func generate_stones_in_array():
 				else:
 					game_field[rowy][colx] = -1597
 					sumb+=1597
-					
 			
+
 func create_gamefield_with_plates():
 	#print("create_gamefield_with_plates()")
 	for colx in range(game_field_size):
@@ -419,7 +421,7 @@ func create_gamefield_with_plates():
 				curr_number.position.x = number_size * colx + game_field_margin * (colx + 1)
 				curr_number.position.y = number_size * rowy + game_field_margin * (rowy + 1)
 			else:
-#				print("draw_field() %s " % game_field[rowy][colx] as String)
+	#print("draw_field() %s " % game_field[rowy][colx] as String)
 				curr_number.set_xy(rowy, colx)
 				curr_number.setup_number_rect(number_rect_size)
 				curr_number.set_number_to_label(game_field[rowy][colx])
@@ -448,7 +450,6 @@ func reasign_numbers_on_gamefield():
 	gui_node.update_score()
 
 
-
 func check_space_for_numbers():
 	#print("Main check_space_for_numbers()")
 	var spaces = 0
@@ -463,11 +464,12 @@ func check_game_condition():
 	if check_space_for_numbers() != 0:
 		generate_new_numbers_in_array()
 		if kodurv > 2 and check_space_for_numbers() != 0:
+			#if summ > 256 and summ <260 or summ > 990 and summ < 994 :
+			#generate_stones_in_array()
 			generate_stones_in_array()
 	elif check_space_for_numbers() == 0:
 		game_over()
 		return
-
 
 
 func show_gui_node(bl:bool):
@@ -493,19 +495,14 @@ func show_background_node(bl:bool):
 	if background_node != null:
 		background_node.set_visible(bl)
 
-
-
 func move_down(mas):
 #	print("func move_down(mas)")
-	randgen.randomize()
-	copy_gamefield()
+	randgen.randomize()	
 	var kodx1 = 1
 	while kodx1 == 1:
 		var sempty = 0
-		for colx in range(game_field_size):
-			
-			for rowy in range(game_field_size-1):
-				
+		for colx in range(game_field_size):			
+			for rowy in range(game_field_size-1):				
 				if mas[rowy][colx] != 0:
 					if mas[rowy+1][colx] == 0:
 						kodx1 += 1
@@ -538,19 +535,16 @@ func move_down(mas):
 			if sempty == 0:
 				game_over()			
 	reasign_numbers_on_gamefield()	
-	is_undo_copied = true			   
+		   
 
 func move_up(mas):
 #	print("func move_up(mas)")
 	randgen.randomize()
-	copy_gamefield()
 	var kodx2 = 1
 	while kodx2 == 1:
 		var sempty = 0
-		for colx in range(game_field_size):
-			
-			for rowy in range(1, game_field_size):
-				
+		for colx in range(game_field_size):			
+			for rowy in range(1, game_field_size):				
 				if mas[game_field_size-rowy][colx] != 0:
 					if  mas[game_field_size-rowy-1][colx] == 0:
 						kodx2+=1
@@ -571,7 +565,6 @@ func move_up(mas):
 						mas[game_field_size-rowy][colx] = 0
 				else:
 					sempty += 1
-
 		if kodx2 > 1:
 			kodx2 = 1
 		else:
@@ -584,19 +577,16 @@ func move_up(mas):
 			if sempty == 0:
 				game_over()			
 	reasign_numbers_on_gamefield()	
-	is_undo_copied = true			   
+		   
 	
 func move_right(mas):
 #	print("func move_right(mas)")
 	randgen.randomize()
-	copy_gamefield()
 	var kody1 = 1
 	while kody1 == 1:
 		var sempty = 0
-		for rowy in range(game_field_size):
-			
-			for colx in range(game_field_size-1):
-				
+		for rowy in range(game_field_size):			
+			for colx in range(game_field_size-1):				
 				if mas[rowy][colx] != 0:
 					if mas[rowy][colx+1] == 0:
 						kody1+=1
@@ -629,11 +619,11 @@ func move_right(mas):
 			if sempty == 0:
 				game_over()			
 	reasign_numbers_on_gamefield()	
-	is_undo_copied = true
+
+
 func move_left(mas):
 #	print("func move_left(mas)")
 	randgen.randomize()
-	copy_gamefield()
 	var kody2 = 1
 	while kody2 == 1:
 		var sempty = 0
@@ -661,8 +651,7 @@ func move_left(mas):
 						mas[rowy][game_field_size-colx-1] = mas[rowy][game_field_size-colx-1] + mas[rowy][game_field_size-colx]
 						mas[rowy][game_field_size-colx] =  0
 				else:
-					sempty += 1
-											
+					sempty += 1											
 		if kody2 > 1:
 			kody2 = 1
 		else:
@@ -675,4 +664,4 @@ func move_left(mas):
 			if sempty == 0:
 				game_over()			
 	reasign_numbers_on_gamefield()	
-	is_undo_copied = true		   
+	   

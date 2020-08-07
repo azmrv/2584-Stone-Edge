@@ -352,17 +352,10 @@ func set_color_darker():
 		select_node_to_color("b105ef")
 	elif number == 6765 :
 		select_node_to_color("9403cf")
-	elif number == 10946 :
-		select_node_to_color("d6048a")
-	elif number == 17711 :
-		select_node_to_color("d6056c")
 	elif number == -377 :
-		select_node_to_color("9403cf")
-	elif number == -610 :
 		select_node_to_color("d6048a")
-	elif number == -987 :
+	elif number == -610 :
 		select_node_to_color("d6056c")	
-	
 	else:
 		select_node_to_color("d62147")
 	
@@ -373,7 +366,7 @@ func set_color_bright():
 	#print("set_color() number =", number)
 	#0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765, 10946, 17711
 	if number == null:				
-		select_node_to_color(Color( 0.5, 0.51, 0.43, 0.3 ))
+		select_node_to_color("838383")
 	elif number == 1 :
 		select_node_to_color("fb7d7d")
 	elif number == 2 :

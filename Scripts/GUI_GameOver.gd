@@ -46,8 +46,6 @@ func update_score():
 			$VBox/VBoxLabels/ScoreTable.append_bbcode("		" + str(key)+": "+ str(dict[key]) + "\n")
 
 
-	
-
 func _on_NewGame_pressed() -> void:
 #	$VBox.visible = false
 #	$PopUp.visible = true

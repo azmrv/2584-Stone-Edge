@@ -182,6 +182,7 @@ func gameover():
 	Main.new_game = 1
 	Main.game_over()
 
+
 func _on_AI_pressed() -> void:
 	Main.new_game = 1
 	$Menu/CRect/CenterContainer/VBox/AI.text = "10 turns AI"
