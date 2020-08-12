@@ -18,6 +18,7 @@ android/
 data_*/
 
 Builds/
+.history/
 
 # End of https://www.toptal.com/developers/gitignore/api/godot
 *.apk

@@ -64,14 +64,6 @@ func add_menu_items():
 	pass
 
 
-func show_message(text):
-#	print("show_message()")
-#	$GUI_InGamePlay/VBoxContainer/CentContMessage/Message.text = text
-#	$GUI_InGamePlay/VBoxContainer/CentContMessage/Message.show()
-#	$GUI_InGamePlay/MessageTimer.start()
-	pass
-
-
 func show_game_over():
 #	show_message("Game Over")
 #	# Wait until the MessageTimer has counted down.
@@ -101,8 +93,18 @@ func setup_signals():
 #	print("setup_signals()")
 	pass
 
+func show_gameover():
+	$VBoxC/Menu/VBox/Buttons.visible = false
+	$MessPU.show()
+	$MessPU/CRect2/CC/MessageBox.text = "Game over"
+	$GameOverT.wait_time = 2
+	$GameOverT.start()
 
-
+func show_message(text):	
+	$MessGL.show()
+	$MessGL/CC/MessageBox.text = text
+	$Timer.wait_time = 2
+	$Timer.start()
 
 
 func _on_Psyontech_pressed() -> void:
@@ -113,20 +115,20 @@ func _on_Psyontech_pressed() -> void:
 
 func _on_Undo_pressed() -> void:
 	emit_signal("gui_undo")	
+	show_message("Undo activated")
 	AdsManager.showRewardedVideo()
 	Main.undo()
 
 
 func _on_MenuB_pressed() -> void:
 	Main.new_game = 0
-
 	$Menu.show()
 
 
 func _on_Restart_pressed() -> void:
-	Main.new_game = 1
-	update_score()
+	Main.new_game = 1	
 	AdsManager.showBanner()
+	show_message("New Game!")
 	Main.new_game()
 	$Menu.hide()
 
@@ -145,26 +147,28 @@ func _on_ToggleTheme_pressed() -> void:
 	if Main.is_dark == false && $Menu/CRect/CenterContainer/VBox/ToggleTheme.pressed == false:
 		$Menu/CRect/CenterContainer/VBox/ToggleTheme.pressed = false
 		$Menu/CRect/CenterContainer/VBox/ToggleTheme.text = "Dark"
-		Main.is_dark = true	
-		print("Mode %s" % Main.clickInput)
+		Main.is_dark = true
+		show_message("Dark theme activated")		
 	if Main.is_dark == true && $Menu/CRect/CenterContainer/VBox/ToggleTheme.pressed == true:
 		$Menu/CRect/CenterContainer/VBox/ToggleTheme.pressed = true
 		$Menu/CRect/CenterContainer/VBox/ToggleTheme.text = "Bright"
 		Main.is_dark = false
-		print("Mode %s" % Main.clickInput)
+		show_message("Bright theme activated")
+	Main.reasign_numbers_on_gamefield()
+	$Menu.hide()
 
 
 func _on_ClickMode_pressed() -> void:
-	print("GUI Change click mode")	
+	#print("GUI Change click mode")	
 	if Main.clickInput == true && $Menu/CRect/CenterContainer/VBox/ClickMode.pressed == false:
 		$Menu/CRect/CenterContainer/VBox/ClickMode.text = "Click Mode OFF"
-		Main.clickInput = false		
-		print("Mode %s" % Main.clickInput)
+		Main.clickInput = false
+		show_message("Click Mode OFF")
 	elif Main.clickInput == false && $Menu/CRect/CenterContainer/VBox/ClickMode.pressed == true:
 		$Menu/CRect/CenterContainer/VBox/ClickMode.text = "Click Mode ON"
 		Main.clickInput = true
-		print("Mode %s" % Main.clickInput)
-	
+		show_message("Click Mode ON")
+	$Menu.hide()
 
 
 func _on_Options_pressed() -> void:
@@ -173,16 +177,22 @@ func _on_Options_pressed() -> void:
 
 
 func gameover():
+	$Menu.hide()
+	$Menu.visible = false	
+	$HelpM.hide()
+	$MessPU.hide()	
 	Main.new_game = 1
 	Main.game_over()
-	$Menu.hide()
+
 
 func _on_AI_pressed() -> void:
 	Main.new_game = 1
 	$Menu/CRect/CenterContainer/VBox/AI.text = "10 turns AI"
 	$Menu.hide()
-	Main.ai_turns(20)
-	
+	show_message("AI make 10 turns for you!")
+	AdsManager.showRewardedVideo()
+	# temporary ?
+	Main.ai_turns(10)
 
 
 func _on_Share_pressed() -> void:
@@ -197,10 +207,19 @@ func _on_Close_pressed() -> void:
 
 func _on_Help_pressed() -> void:
 	Main.new_game = 0
-
 	$HelpM.show()
 
 
 func _on_CloseHelpM_pressed() -> void:
 	Main.new_game = 1
 	$HelpM.hide()
+
+
+func _on_GameOverT_timeout() -> void:
+	$MessPU.hide()
+	$VBoxC/Menu/VBox/Buttons.visible = true
+	Main.show_result()
+
+
+func _on_Timer_timeout() -> void:
+	$MessGL.hide()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Styles/FontsStyle.tres" type="DynamicFont" id=1]
 [ext_resource path="res://Scripts/GUI.gd" type="Script" id=2]
@@ -16,6 +16,28 @@
 size = 20
 outline_color = Color( 0.145098, 0.145098, 0.145098, 1 )
 font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 40
+outline_color = Color( 0.0392157, 0.0705882, 0.0313726, 1 )
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 70
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFontData" id=4]
+font_path = "res://Fonts/PT Sans_Bold.ttf"
+
+[sub_resource type="DynamicFont" id=5]
+size = 40
+outline_size = 1
+outline_color = Color( 0.184314, 0.184314, 0.184314, 1 )
+use_mipmaps = true
+use_filter = true
+font_data = SubResource( 4 )
 
 [node name="GUI" type="Node2D"]
 z_as_relative = false
@@ -35,7 +57,7 @@ __meta__ = {
 [node name="TelosAds" type="VBoxContainer" parent="VBoxC"]
 show_behind_parent = true
 margin_right = 500.0
-margin_bottom = 58.0
+margin_bottom = 62.0
 size_flags_horizontal = 3
 
 [node name="Psyontech" type="LinkButton" parent="VBoxC/TelosAds"]
@@ -55,16 +77,19 @@ __meta__ = {
 
 [node name="GameName" type="Label" parent="VBoxC/TelosAds"]
 show_behind_parent = true
-margin_top = 31.0
+margin_top = 35.0
 margin_right = 500.0
-margin_bottom = 58.0
+margin_bottom = 62.0
 grow_horizontal = 0
 grow_vertical = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_fonts/font = ExtResource( 1 )
 custom_colors/font_color = Color( 0.772549, 0.772549, 0.772549, 1 )
-text = "2584 Fibonacci "
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 2
+text = "2584 Stone Edge"
 align = 1
 valign = 1
 __meta__ = {
@@ -73,15 +98,17 @@ __meta__ = {
 
 [node name="Menu" type="HBoxContainer" parent="VBoxC"]
 show_behind_parent = true
-margin_top = 62.0
+margin_top = 70.0
 margin_right = 500.0
-margin_bottom = 139.0
+margin_bottom = 151.0
+rect_min_size = Vector2( 0, 77 )
 size_flags_horizontal = 3
 
 [node name="VBox" type="VBoxContainer" parent="VBoxC/Menu"]
 show_behind_parent = true
 margin_right = 500.0
-margin_bottom = 77.0
+margin_bottom = 81.0
+rect_min_size = Vector2( 0, 77 )
 size_flags_horizontal = 3
 alignment = 1
 
@@ -95,13 +122,13 @@ rect_min_size = Vector2( 0, 30 )
 size_flags_horizontal = 3
 
 [node name="Container3" type="Container" parent="VBoxC/Menu/VBox/Score"]
-margin_right = 62.0
+margin_right = 56.0
 margin_bottom = 33.0
 size_flags_horizontal = 3
 
 [node name="Score" type="Label" parent="VBoxC/Menu/VBox/Score"]
-margin_left = 66.0
-margin_right = 221.0
+margin_left = 64.0
+margin_right = 219.0
 margin_bottom = 33.0
 custom_styles/normal = ExtResource( 3 )
 custom_fonts/font = ExtResource( 12 )
@@ -114,8 +141,8 @@ align = 1
 valign = 1
 
 [node name="Container" type="Container" parent="VBoxC/Menu/VBox/Score"]
-margin_left = 225.0
-margin_right = 287.0
+margin_left = 227.0
+margin_right = 283.0
 margin_bottom = 33.0
 size_flags_horizontal = 3
 
@@ -134,16 +161,16 @@ align = 1
 valign = 1
 
 [node name="Container2" type="Container" parent="VBoxC/Menu/VBox/Score"]
-margin_left = 438.0
+margin_left = 442.0
 margin_right = 500.0
 margin_bottom = 33.0
 size_flags_horizontal = 3
 
 [node name="Buttons" type="HBoxContainer" parent="VBoxC/Menu/VBox"]
 show_behind_parent = true
-margin_top = 37.0
+margin_top = 41.0
 margin_right = 500.0
-margin_bottom = 77.0
+margin_bottom = 81.0
 grow_horizontal = 2
 grow_vertical = 2
 rect_min_size = Vector2( 500, 40 )
@@ -157,8 +184,8 @@ rect_min_size = Vector2( 20, 0 )
 size_flags_vertical = 3
 
 [node name="Undo" type="Button" parent="VBoxC/Menu/VBox/Buttons"]
-margin_left = 24.0
-margin_right = 90.0
+margin_left = 28.0
+margin_right = 94.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 0, 40 )
 hint_tooltip = "Avaible after some ADs"
@@ -172,8 +199,8 @@ custom_colors/font_color = Color( 0.772549, 0.772549, 0.772549, 1 )
 text = "UNDO"
 
 [node name="Container" type="Container" parent="VBoxC/Menu/VBox/Buttons"]
-margin_left = 94.0
-margin_right = 179.0
+margin_left = 102.0
+margin_right = 175.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -194,8 +221,8 @@ custom_fonts/font = ExtResource( 12 )
 text = "Help"
 
 [node name="Container3" type="Container" parent="VBoxC/Menu/VBox/Buttons"]
-margin_left = 287.0
-margin_right = 372.0
+margin_left = 291.0
+margin_right = 364.0
 margin_bottom = 40.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -205,8 +232,8 @@ size_flags_vertical = 3
 
 [node name="MenuB" type="Button" parent="VBoxC/Menu/VBox/Buttons"]
 show_behind_parent = true
-margin_left = 376.0
-margin_right = 476.0
+margin_left = 372.0
+margin_right = 472.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 100, 40 )
 size_flags_vertical = 3
@@ -229,9 +256,9 @@ size_flags_vertical = 3
 
 [node name="GFContainer" type="CenterContainer" parent="VBoxC"]
 show_behind_parent = true
-margin_top = 143.0
+margin_top = 159.0
 margin_right = 500.0
-margin_bottom = 643.0
+margin_bottom = 659.0
 rect_min_size = Vector2( 500, 500 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -240,7 +267,7 @@ __meta__ = {
 }
 
 [node name="HelpH" type="HBoxContainer" parent="VBoxC"]
-margin_top = 647.0
+margin_top = 667.0
 margin_right = 500.0
 margin_bottom = 900.0
 rect_min_size = Vector2( 0, 50 )
@@ -249,30 +276,26 @@ size_flags_vertical = 3
 
 [node name="Container" type="Container" parent="VBoxC/HelpH"]
 margin_right = 10.0
-margin_bottom = 253.0
+margin_bottom = 233.0
 rect_min_size = Vector2( 10, 20 )
 
 [node name="HelpL" type="Label" parent="VBoxC/HelpH"]
-margin_left = 14.0
-margin_right = 486.0
-margin_bottom = 253.0
+margin_left = 18.0
+margin_right = 482.0
+margin_bottom = 233.0
 rect_min_size = Vector2( 400, 150 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/font = ExtResource( 1 )
+custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0.619608, 0.619608, 0.619608, 1 )
-text = "1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765, 10946, 177110, 28657, 46368, 75025, 121393, 196418, 317811,
-514229, 832040, 1346269, 2178309, 3524578, 5702887, 9227465, 14930352, 24157817, 39088169, 63245986, 102334155, 165580141, 
-267914296, 433494437, 701408733, 1134903170, 1836311903, 2971215073, 4807526976, 7778742049
-
-"
+text = "1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765, 10946, 17711"
 autowrap = true
 clip_text = true
 
 [node name="Container2" type="Container" parent="VBoxC/HelpH"]
 margin_left = 490.0
 margin_right = 500.0
-margin_bottom = 253.0
+margin_bottom = 233.0
 rect_min_size = Vector2( 10, 20 )
 
 [node name="ColorHelp" type="CenterContainer" parent="VBoxC"]
@@ -304,7 +327,7 @@ margin_top = -42.449
 margin_right = 75.2143
 margin_bottom = 657.551
 rect_min_size = Vector2( 450, 700 )
-color = Color( 0.152941, 0.247059, 0.141176, 1 )
+color = Color( 0.137255, 0.278431, 0.27451, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -334,11 +357,12 @@ __meta__ = {
 
 [node name="Container2" type="Container" parent="Menu/CRect/CenterContainer/VBox"]
 margin_right = 400.0
-margin_bottom = 92.0
+margin_bottom = 127.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="GAME OVER" type="Button" parent="Menu/CRect/CenterContainer/VBox"]
+visible = false
 margin_top = 102.0
 margin_right = 400.0
 margin_bottom = 162.0
@@ -352,9 +376,9 @@ custom_fonts/font = ExtResource( 5 )
 text = "GAME OVER"
 
 [node name="AI" type="Button" parent="Menu/CRect/CenterContainer/VBox"]
-margin_top = 172.0
+margin_top = 137.0
 margin_right = 400.0
-margin_bottom = 232.0
+margin_bottom = 197.0
 rect_min_size = Vector2( 0, 60 )
 custom_styles/hover = ExtResource( 11 )
 custom_styles/pressed = ExtResource( 8 )
@@ -379,9 +403,9 @@ custom_fonts/font = ExtResource( 5 )
 text = "Options"
 
 [node name="ToggleTheme" type="Button" parent="Menu/CRect/CenterContainer/VBox"]
-margin_top = 242.0
+margin_top = 207.0
 margin_right = 400.0
-margin_bottom = 302.0
+margin_bottom = 267.0
 rect_min_size = Vector2( 0, 60 )
 custom_styles/hover = ExtResource( 11 )
 custom_styles/pressed = ExtResource( 8 )
@@ -394,9 +418,9 @@ pressed = true
 text = "Theme Bright"
 
 [node name="ClickMode" type="Button" parent="Menu/CRect/CenterContainer/VBox"]
-margin_top = 312.0
+margin_top = 277.0
 margin_right = 400.0
-margin_bottom = 372.0
+margin_bottom = 337.0
 rect_min_size = Vector2( 0, 60 )
 custom_styles/hover = ExtResource( 11 )
 custom_styles/pressed = ExtResource( 8 )
@@ -436,9 +460,9 @@ custom_fonts/font = ExtResource( 5 )
 text = "8 x 8"
 
 [node name="Share" type="Button" parent="Menu/CRect/CenterContainer/VBox"]
-margin_top = 382.0
+margin_top = 347.0
 margin_right = 400.0
-margin_bottom = 442.0
+margin_bottom = 407.0
 rect_min_size = Vector2( 0, 60 )
 custom_styles/hover = ExtResource( 11 )
 custom_styles/pressed = ExtResource( 8 )
@@ -449,9 +473,9 @@ custom_fonts/font = ExtResource( 5 )
 text = "Share"
 
 [node name="Restart" type="Button" parent="Menu/CRect/CenterContainer/VBox"]
-margin_top = 452.0
+margin_top = 417.0
 margin_right = 400.0
-margin_bottom = 512.0
+margin_bottom = 477.0
 rect_min_size = Vector2( 0, 60 )
 custom_styles/hover = ExtResource( 11 )
 custom_styles/pressed = ExtResource( 8 )
@@ -462,7 +486,7 @@ custom_fonts/font = ExtResource( 5 )
 text = "Restart"
 
 [node name="Container3" type="Container" parent="Menu/CRect/CenterContainer/VBox"]
-margin_top = 522.0
+margin_top = 487.0
 margin_right = 400.0
 margin_bottom = 614.0
 size_flags_horizontal = 3
@@ -498,9 +522,9 @@ __meta__ = {
 margin_left = -375.0
 margin_top = -95.0
 margin_right = 75.0
-margin_bottom = 742.0
+margin_bottom = 745.0
 rect_min_size = Vector2( 450, 840 )
-color = Color( 0.152941, 0.247059, 0.141176, 1 )
+color = Color( 0.137255, 0.278431, 0.27451, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -544,11 +568,16 @@ custom_fonts/normal_font = ExtResource( 5 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 2
 custom_constants/shadow_offset_y = 2
-text = "The movement of numbers on the playing field for four sides, does by swipe.
+text = "Game Rules:
+
+The movement of numbers on the playing field for four sides, does by swipe.
 The adjacent numbers of the Fibonacci series are interconnected. 
 Example: 1 connected with 2, 2 - 3, 3 - 5, 5 - 8, 8 - 13, 13 - 21, 21 - 34, 34 - 55 &etc.
 Fibonacci  sequence 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765, 10946, 17711 ...
-In which the first two numbers are either 1 and 1, or 0 and 1, and each subsequent number is equal to the sum of the two previous numbers."
+In which the first two numbers are either 1 and 1, or 0 and 1, and each subsequent number is equal to the sum of the two previous numbers.
+Much harder version of 2584 Fibonacci. 
+Try 2584 Stone Edge, with unexpected events on the game filed, randomly generate \"stones\", a negative numbers! 
+In this version you can try to achieve new horizons of scores in yours gamers portfolio."
 
 [node name="Container3" type="Container" parent="HelpM/CRect/CenterContainer/VBox"]
 margin_top = 710.0
@@ -569,6 +598,109 @@ custom_styles/disabled = ExtResource( 10 )
 custom_styles/normal = ExtResource( 9 )
 custom_fonts/font = ExtResource( 5 )
 text = "Close Help"
+
+[node name="MessPU" type="PopupMenu" parent="."]
+light_mask = 0
+margin_left = 210.012
+margin_top = 349.146
+margin_right = 283.012
+margin_bottom = 389.146
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CRect2" type="ColorRect" parent="MessPU"]
+margin_left = -184.537
+margin_top = -26.8333
+margin_right = 265.463
+margin_bottom = 73.1667
+rect_min_size = Vector2( 450, 100 )
+color = Color( 0.188235, 0.607843, 0.623529, 1 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="CC" type="CenterContainer" parent="MessPU/CRect2"]
+margin_right = 450.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 450, 100 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MessageBox" type="Label" parent="MessPU/CRect2/CC"]
+margin_left = 65.0
+margin_top = 4.0
+margin_right = 385.0
+margin_bottom = 96.0
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 2
+text = "Game over"
+align = 1
+valign = 1
+
+[node name="MessGL" type="PopupMenu" parent="."]
+margin_left = -58.5202
+margin_top = -52.857
+margin_right = -18.5202
+margin_bottom = -12.857
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CRect2" type="ColorRect" parent="MessGL"]
+visible = false
+margin_left = 22.3303
+margin_top = 130.249
+margin_right = 472.33
+margin_bottom = 580.249
+rect_min_size = Vector2( 450, 450 )
+color = Color( 0.933333, 0.321569, 0.321569, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CC" type="CenterContainer" parent="MessGL"]
+margin_left = 84.3021
+margin_top = 214.013
+margin_right = 534.302
+margin_bottom = 664.013
+rect_min_size = Vector2( 450, 450 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="MessageBox" type="Label" parent="MessGL/CC"]
+margin_left = 25.0
+margin_top = 25.0
+margin_right = 425.0
+margin_bottom = 425.0
+rect_min_size = Vector2( 400, 400 )
+custom_fonts/font = SubResource( 5 )
+custom_colors/font_color = Color( 0.996078, 0.364706, 0.00392157, 1 )
+custom_colors/font_outline_modulate = Color( 0.145098, 0.145098, 0.145098, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 2
+text = "Congratulation! 
+You have achieved new level of happiness!"
+align = 1
+valign = 1
+autowrap = true
+clip_text = true
+
+[node name="GameOverT" type="Timer" parent="."]
+one_shot = true
+
+[node name="Timer" type="Timer" parent="."]
 [connection signal="pressed" from="VBoxC/TelosAds/Psyontech" to="." method="_on_Psyontech_pressed"]
 [connection signal="pressed" from="VBoxC/Menu/VBox/Buttons/Undo" to="." method="_on_Undo_pressed"]
 [connection signal="pressed" from="VBoxC/Menu/VBox/Buttons/Help" to="." method="_on_Help_pressed"]
@@ -584,3 +716,5 @@ text = "Close Help"
 [connection signal="pressed" from="Menu/CRect/CenterContainer/VBox/Restart" to="." method="_on_Restart_pressed"]
 [connection signal="pressed" from="Menu/CRect/CenterContainer/VBox/Close" to="." method="_on_Close_pressed"]
 [connection signal="pressed" from="HelpM/CRect/CenterContainer/VBox/Close" to="." method="_on_CloseHelpM_pressed"]
+[connection signal="timeout" from="GameOverT" to="." method="_on_GameOverT_timeout"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

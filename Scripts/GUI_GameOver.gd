@@ -11,11 +11,12 @@ var background_scenes = preload("res://Scenes/Background.tscn")
 func _ready() -> void:
 	setup()
 
-
-func _process(delta: float) -> void:
-	if $WaitForADs.get_time_left() != 0:
-		$PopUp/TimeToADs.text = str($WaitForADs.time_left)
-
+#
+#
+#func _process(delta: float) -> void:
+#	if $WaitForADs.get_time_left() != 0:
+#		$PopUp/TimeToADs.text = str($WaitForADs.time_left)
+#
 
 
 func setup():
@@ -32,18 +33,17 @@ func setup():
 	print("set screen size = %s" %  screenSize)
 #	$WaitForADs.connect("timeout", self, "_on_WaitForADs_timeout")
 
-
 func update_score():
 #	print("GUI_GameOver update_score(score)")	
-	$VBox/VBoxLabels/ScoreTable.bbcode_text = "[center]Score Table" + "\n" +"[/center]"
+	$VBox/VBoxLabels/ScoreTable.bbcode_text = "[center]Score Table" + "\n"+ "\n"  +"[/center]"
 #	$VBox/VBoxLabels/ScoreTable.text = "Score: %s" % str(Main.current_score)
-	Main.set_records_table()
+	var dkey = Main.set_records_table()
 	var dict = Main.scores_dict	
 	for key in dict:
-		$VBox/VBoxLabels/ScoreTable.append_bbcode("		" + str(key)+": "+ str(dict[key]) + "\n")
-
-
-
+		if key == dkey:
+			$VBox/VBoxLabels/ScoreTable.append_bbcode("[color=red]"+"		" + str(key)+": "+ str(dict[key]) + "[/color]" + "\n")
+		else:
+			$VBox/VBoxLabels/ScoreTable.append_bbcode("		" + str(key)+": "+ str(dict[key]) + "\n")
 
 
 func _on_NewGame_pressed() -> void:
@@ -53,9 +53,6 @@ func _on_NewGame_pressed() -> void:
 	AdsManager.showInterstitial()
 	Main.new_game()
 
-#	$WaitForADs.wait_time = 0.3
-#	$WaitForADs.one_shot = true
-#	$WaitForADs.start()
 
 func _on_WaitForADs_timeout() -> void:
 	$PopUp.visible = false

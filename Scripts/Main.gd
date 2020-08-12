@@ -8,13 +8,14 @@ signal moving_numbers
 signal exit_game
 signal save_player_data
 
+
 #Scenes
 var number_scene = preload("res://Scenes/Number.tscn")
-var ads_scene = preload("res://Scenes/ADs.tscn")
+#var ads_scene = preload("res://Scenes/ADs.tscn")
 var gamefield_scene = preload("res://Scenes/GameField.tscn")
 var background_scene = preload("res://Scenes/Background.tscn")
 var game_field_scene = preload("res://Scenes/GameField.tscn")
-
+var telosgames_logo_scene = preload("res://Scenes/Logo.tscn")
 # GUI Scenes
 var gui_scene = preload("res://Scenes/GUI.tscn")
 var gui_gameover_scene = preload("res://Scenes/GUI_GameOver.tscn")
@@ -28,7 +29,7 @@ var gui_gameover_node = null
 var background_node = null
 var mainWindow_node = null
 var gamefield_node = null
-
+var telosgames_logo_node = null
 #Scripts
 #var mainWindow_script = preload("res://Scripts/MainWindow.gd").new()
 #var number_script = preload("res://Scripts/Number.gd").new()
@@ -65,6 +66,7 @@ var menu_machground = "A5B48C"
 var text_color = "363636"
 
 var summ = 0
+
 var sumb = 0
 var kodurv = 3
 var eend = 4
@@ -76,16 +78,27 @@ var is_undo_copied = false
 
 var game_field = [[],[]]
 
+var probability_of_num_one = 0.72
+var probability_of_stone = 0.618
+var probability_of_big_stone = 0.618
+
+
 var randgen = RandomNumberGenerator.new()
+var is_2584 = false
+var is_newgame = false
+
+var undo_best_score = 0
+var undo_score = 0
 
 var current_score = 0
 var best_score = 0
-var scores_dict = {"1st    ": 1134903170, "2st    ": 832040, "3st    ": 317811, "4st    ": 46368, "5st    ": 10946, "6st    ": 2584, "7st    ": 987, "8st    ": 377, "9st    ": 233, "10st  ": 144}
+var scores_dict = {"1st    ": 1134903170, "2st    ": 832040, "3st    ": 317811, "4st    ": 46368, "5st    ": 10946, "6st    ": 2584, "7st    ": 987, "8st    ": 377, "9st    ": 233, "10st  ": 144}																																																   
+var fibarr = [2584, 4181, 6765, 10946, 17711, 28657, 46368, 75025, 121393, 196418, 317811, 514229, 832040, 1346269, 2178309, 3524578, 5702887, 9227465, 14930352, 24157817, 39088169, 63245986, 102334155, 165580141, 267914296, 433494437, 701408733, 1134903170, 1836311903, 2971215073, 4807526976, 7778742049]
 
 var show_ads = false
 
 var new_game = 0
-
+var is_plaing = false
 var number_rect_size = null
 var number_scene_pos = 0
 # for testing old value = 1, 2
@@ -128,13 +141,16 @@ func setup_nodes():
 	gui_node.set_visible(false)
 	gamefield_node = game_field_scene.instance()
 	get_node("/root/MainWindow/GUI/VBoxC/GFContainer").add_child(gamefield_node)
-	ads_node = ads_scene.instance()
-	get_node("/root/MainWindow").add_child(ads_node)
-	ads_node.set_visible(false)
+#	ads_node = ads_scene.instance()
+#	get_node("/root/MainWindow").add_child(ads_node)
+#	ads_node.set_visible(false)
 	gui_gameover_node = gui_gameover_scene.instance()
 	get_node("/root/MainWindow").add_child(gui_gameover_node)
-	gui_gameover_node.set_visible(false)
-	
+	gui_gameover_node.set_visible(false)	
+	telosgames_logo_node = telosgames_logo_scene.instance()
+	get_node("/root/MainWindow").add_child(telosgames_logo_node)
+	telosgames_logo_node.set_visible(false)	
+	show_logo()	
 
 
 #func setup_signals():
@@ -156,9 +172,15 @@ func setup_nodes():
 func new_game():
 	print("Main new_game()")
 	randgen.randomize()
+	# if saved game exists load it
+	# else do newgame stuff
+	if Utility.check_saves() && is_newgame == false:
+		Utility.load_game()		
+	is_newgame = true
 	background_node.set_visible(true)
 	undo_game_field = null
 	new_game = 1	
+	is_plaing = true
 	game_field = make_matrix()
 	summ = 0	
 	current_score = summ
@@ -175,8 +197,17 @@ func new_game():
 
 func game_over():
 	print("Main game_over()")
-	undo_game_field = null
-	new_game = 0
+	if is_plaing == true:
+		print("Main DO STUFF game_over()")
+		is_plaing = false
+		undo_game_field = null
+		new_game = 0
+		gui_node.show_gameover()
+	else:
+		return
+
+
+func show_result():
 	gui_node.set_visible(false)
 	gui_gameover_node.update_score()
 	gui_gameover_node.set_visible(true)
@@ -185,7 +216,7 @@ func game_over():
 func setup():
 	print("Main setup()")
 	randgen.randomize()
-	setup_scenes()
+#	setup_scenes()
 	setup_nodes()
 	setup_window()
 #	setup_signals()
@@ -195,14 +226,15 @@ func setup():
 #	create_gamefield_with_plates()
 
 
-func setup_thems():
-	print("Main setup_thems()")
+#func setup_thems():
+#	print("Main setup_thems()")
 
 
 func update_score():
 	current_score = summ
-	if current_score >= best_score:
-		best_score = current_score
+	if current_score != null and best_score != null:
+		if current_score >= best_score:
+			best_score = current_score
 
 
 func setup_window():
@@ -220,12 +252,21 @@ func setup_window():
 
 
 func set_records_table():
-	# проверять значение current_score и вставлять его в словарь.
 	var value = 0
+	var dkey = 0	
 	for key in scores_dict:
-		if scores_dict[key] as int <= current_score:			
-#			scores_dict[key] = ["My Score"]
-			scores_dict[key] = str(current_score)
+		if scores_dict[key] as int >= current_score:	
+			dkey = key	
+		elif scores_dict[key] as int <= current_score:
+			dkey = key
+			value = scores_dict[key]
+			scores_dict[dkey] = current_score
+			return dkey
+
+
+func show_logo():
+	gui_node.set_visible(false)
+	telosgames_logo_node.set_visible(true)
 
 
 
@@ -241,7 +282,10 @@ func show_ads():
 #	show_ads_node(true)
 #	ads_node.start_ads_timer()
 	new_game()
-	#$GUI.show_message("ADs, Money blwe $$$$$$$" )
+
+
+func show_message(text):
+	gui_node.show_message(text)
 
 
 func colors_thems(curr_color_them : String):
@@ -259,27 +303,28 @@ func colors_thems(curr_color_them : String):
 		return
 
 
-func arr_copy(arr):
-	return arr.duplicate(true)
-
-
 func undo():
 	if undo_game_field != null:
-		game_field = arr_copy(undo_game_field)
+		game_field = undo_game_field.duplicate(true)
+		current_score = undo_score
+		summ = current_score
+		best_score = undo_best_score
 	is_undo_copied = false	
 	reasign_numbers_on_gamefield()
+	update_score()
 
 
 func copy_gamefield():
-	if is_undo_copied == false:
-		undo_game_field = arr_copy(game_field)
+	#if is_undo_copied == false:
+	undo_game_field = game_field.duplicate(true)
+	undo_score = current_score
+	undo_best_score = best_score
 	is_undo_copied = true
-	
 
 
 func ai_turns(turns:int):
 	for i in range(turns):
-		if new_game == 1:
+		if new_game == 1 && is_plaing == true:
 			yield(get_tree().create_timer(0.01), "timeout")
 			call_deferred("move_right",game_field)
 			yield(get_tree().create_timer(0.01), "timeout")
@@ -292,90 +337,6 @@ func ai_turns(turns:int):
 			return
 
 
-func save():
-	var save_dict = {
-		"filename" : get_filename(),
-		"parent" : get_parent().get_path(),
-		"screenSize_x" : screenSize.x, 
-		"screenSize_y" : screenSize.y,
-		"show_ads" : show_ads, 
-		"best_score" : best_score, 
-		"current_score" : current_score,
-		"game_field" : game_field,
-		"undo_game_field" : undo_game_field,
-		"summ" : summ,
-		"curr_color_them" : curr_color_them,
-		"new_game_numbers" : new_game_numbers,
-		"hard_level" : hard_level,
-		"game_field_size" : game_field_size,
-		"clickInput" : clickInput,
-		"number_size" : number_size,
-		"game_field_width_x" : game_field_width_x
-	}
-	return save_dict
-
-
-func save_game():
-	# Note: This can be called from anywhere inside the tree. This function is
-	# path independent.
-	# Go through everything in the persist category and ask them to return a
-	# dict of relevant variables
-	var save_game = File.new()
-	save_game.open("user://savegame.save", File.WRITE)
-	var save_nodes = get_tree().get_nodes_in_group("Persist")
-	for node in save_nodes:
-		# Check the node is an instanced scene so it can be instanced again during load
-		if node.filename.empty():
-			print("persistent node '%s' is not an instanced scene, skipped" % node.name)
-			continue
-
-		# Check the node has a save function
-		if !node.has_method("save"):
-			print("persistent node '%s' is missing a save() function, skipped" % node.name)
-			continue
-
-		# Call the node's save function
-		var node_data = node.call("save")
-
-		# Store the save dictionary as a new line in the save file
-		save_game.store_line(to_json(node_data))
-	save_game.close()
-
-
-func load_game():
-	# Note: This can be called from anywhere inside the tree. This function
-	# is path independent.
-	var save_game = File.new()
-	if not save_game.file_exists("user://savegame.save"):
-		return # Error! We don't have a save to load.
-
-	# We need to revert the game state so we're not cloning objects
-	# during loading. This will vary wildly depending on the needs of a
-	# project, so take care with this step.
-	# For our example, we will accomplish this by deleting saveable objects.
-	var save_nodes = get_tree().get_nodes_in_group("Persist")
-	for i in save_nodes:
-		i.queue_free()
-
-	# Load the file line by line and process that dictionary to restore
-	# the object it represents.
-	save_game.open("user://savegame.save", File.READ)
-	while save_game.get_position() < save_game.get_len():
-		# Get the saved dictionary from the next line in the save file
-		var node_data = parse_json(save_game.get_line())
-
-		# Firstly, we need to create the object and add it to the tree and set its position.
-		var new_object = load(node_data["filename"]).instance()
-		get_node(node_data["parent"]).add_child(new_object)
-		new_object.position = Vector2(node_data["pos_x"], node_data["pos_y"])
-
-		# Now we set the remaining variables.
-		for i in node_data.keys():
-			if i == "filename" or i == "parent" or i == "pos_x" or i == "pos_y":
-				continue
-			new_object.set(i, node_data[i])
-	save_game.close()
-
 
 func make_matrix():
 	#print("make_2d_array()")
@@ -387,14 +348,9 @@ func make_matrix():
 	return array
 
 
+
 func generate_new_numbers_in_array():
-	
-	
-	if summ > 256 and summ <260 or summ > 990 and summ < 994 :
-		generate_stones_in_array()
-	
 	var kodn
-	#print("Main generate_new_numbers_in_array() \n")
 	randgen.randomize()
 	kodn = koldop
 	while kodn > 0:
@@ -404,47 +360,49 @@ func generate_new_numbers_in_array():
 		if game_field[rowy][colx] == 0:
 			kodn = kodn - 1
 			var num = randgen.randf()
-			if num <= 0.72:
+			if num <= probability_of_num_one:
 				game_field[rowy][colx] = number_one
 				summ += number_one
 			else:
 				game_field[rowy][colx] = number_two
 				summ += number_two
-				
+	update_score()			
+#			if num <= 0.5:
+#				game_field[rowy][colx] = 1
+#				summ += 1
+#			elif num <= 0.8:
+#				game_field[rowy][colx] = 2
+#				summ += 2
+#			else:
+#				game_field[rowy][colx] = 3
+#				summ += 3	
 
 
 func generate_stones_in_array():
-#	print("Main generate_new_numbers_in_array()")
+	#print("Main generate_new_numbers_in_array()")
 	var kodw=1
 	while kodw == 1 :
 		randgen.randomize()
-	
 		#var y = int(ny * game_field_size % 1)	
 		var colx = randgen.randi_range(0,game_field_size - 1)
 		var rowy = randgen.randi_range(0,game_field_size - 1)	
 		#print(rowy, colx)
 		if game_field[rowy][colx] == 0:
 			kodw=0
-						
 			var num = randgen.randf()
 			if summ > 256 and summ < 260 :
 				summ +=4
-									
-				if num <= 0.618:
+				if num <= probability_of_stone:
 					game_field[rowy][colx] = -377
 					sumb+=377
 				else:
 					game_field[rowy][colx] = -610
 					sumb+=610
-					
 			elif summ > 990 and summ < 994 :
 				summ +=4
-		
-					
-				if num <= 0.618:
+				if num <= probability_of_big_stone:
 					game_field[rowy][colx] = -987
 					sumb+=987
-					
 				else:
 					game_field[rowy][colx] = -1597
 					sumb+=1597
@@ -501,101 +459,17 @@ func check_space_for_numbers():
 				spaces += 1
 	return spaces
 
-
 func check_game_condition():
 	#print("fill_field_with_numbers()")
-	if check_space_for_numbers() >= 2:
+	if check_space_for_numbers() != 0:
 		generate_new_numbers_in_array()
+		if kodurv > 2 and check_space_for_numbers() != 0:
+			#if summ > 256 and summ <260 or summ > 990 and summ < 994 :
+			#generate_stones_in_array()
+			generate_stones_in_array()
 	elif check_space_for_numbers() == 0:
 		game_over()
 		return
-	else:
-		return
-
-
-func fibn(k):
-	if k == 1:
-		 return 0
-	if k == 2:
-		return 1
-	var sc = 0
-	var sa = 1
-	var sb = 2
-	var n = 1
-	while k > sc:
-		n += 1
-		var c = sa + sb
-		var a = sb
-		sb = sc
-	return n
-
-
-# функции для динамического расчета палитры плашек под числами
-#static bool IsFib(long T, out long idx)
-#{
-#    double root5 = Math.Sqrt(5);
-#    double phi = (1 + root5) / 2;
-#
-#    idx    = (long)Math.Floor( Math.Log(T*root5) / Math.Log(phi) + 0.5 );
-#    long u = (long)Math.Floor( Math.Pow(phi, idx)/root5 + 0.5);
-#
-#    return (u == T);
-#}
-
-#var
-#  N, F1, F2, K: integer;
-#Порядковый номер числа Фибоначчи
-#begin
-#  write('N = ');
-#  readln(N);
-#  F1 := 1; { <== первый член ряда Фибоначчи }
-#  F2 := 1; { <== второй член ряда Фибоначчи }
-#  K := 2;
-#  { Выполняем цикл до тех пор, пока введенное нами 
-#  число N больше очередного члена ряда Фибоначчи: }
-#  while (N > F2) do
-#  begin
-#    F2 := F1 + F2; { <== новое значение F2 }
-#    F1 := F2 - F1; { <== новое значение F1 }
-#    inc(K) { <== увеличиваем номер члена F2 }
-#  end;
-#  writeln;
-#  if N = F2 then writeln('Порядковый номер числа Фибоначчи: ', K)
-#  else writeln(' ', N, ' не является числом Фибоначчи!');
-#  readln
-#end.
-
-#var
-#  N, F1, F2, c: integer;
-#Соседние числа Фибоначчи
-#begin
-#  write('N = ');
-#  readln(N);
-#  F1 := 1; { <== первый член ряда Фибоначчи }
-#  F2 := 1; { <== второй член ряда Фибоначчи }
-#  { Выполняем цикл до тех пор, пока введенное нами 
-#  число N больше очередного члена ряда Фибоначчи: }
-#  while (N > F2) do
-#  begin
-#    c := F2; { <== запоминаем второй член ряда }
-#    F2 := F1 + F2; { <== находим новое значение F2 }
-#    F1 := c { <== первому члену приписываем предыдущий (c=F1) }
-#  end;
-#  if N = F2 then writeln('Соседние числа Фибоначчи: ', F1, ' ', F1+F2)
-#  else writeln(N, ' не является числом Фибоначчи!');
-#  readln
-#end.
-
-
-func do_graz_2584():
-	print("pozdr s 2584")
-	# играть музыку играть фонариками запускать фейерверки 
-
-
-func do_graz_adsoff():
-	print("pozdr s 7778742049 no ads for you")
-	# играть музыку играть фонариками запускать фейерверки 
-
 
 
 func show_gui_node(bl:bool):
@@ -624,14 +498,12 @@ func show_background_node(bl:bool):
 func move_down(mas):
 #	print("func move_down(mas)")
 	randgen.randomize()
-	
+	copy_gamefield()
 	var kodx1 = 1
 	while kodx1 == 1:
 		var sempty = 0
-		for colx in range(game_field_size):
-			
-			for rowy in range(game_field_size-1):
-				
+		for colx in range(game_field_size):			
+			for rowy in range(game_field_size-1):				
 				if mas[rowy][colx] != 0:
 					if mas[rowy+1][colx] == 0:
 						kodx1 += 1
@@ -656,31 +528,25 @@ func move_down(mas):
 			kodx1 = 1
 		else:
 			kodx1 = 0
-			if sempty == 0:
-				# после окончания игры прододжает выполнять fill_field_with_numbers()
-				game_over()
-			elif sempty <= 4:
-				koldop = 1
-				
-			else:
+			if sempty <= 4:
+				koldop = 1				
+			elif sempty != 0:
 				koldop = 2
-			generate_new_numbers_in_array()
-	if gui_node != null && new_game != 0:
-		reasign_numbers_on_gamefield()
-	update_score()
-	is_undo_copied = false
+			check_game_condition()
+			if sempty == 0:
+				game_over()			
+	reasign_numbers_on_gamefield()	
+		   
 
 func move_up(mas):
 #	print("func move_up(mas)")
 	randgen.randomize()
-
+	copy_gamefield()
 	var kodx2 = 1
 	while kodx2 == 1:
 		var sempty = 0
-		for colx in range(game_field_size):
-			
-			for rowy in range(1, game_field_size):
-				
+		for colx in range(game_field_size):			
+			for rowy in range(1, game_field_size):				
 				if mas[game_field_size-rowy][colx] != 0:
 					if  mas[game_field_size-rowy-1][colx] == 0:
 						kodx2+=1
@@ -701,36 +567,29 @@ func move_up(mas):
 						mas[game_field_size-rowy][colx] = 0
 				else:
 					sempty += 1
-
 		if kodx2 > 1:
 			kodx2 = 1
 		else:
 			kodx2 = 0
-			if sempty == 0:
-				game_over()
-			elif sempty <= 4:
-				koldop = 1
-								
-			else:
+			if sempty <= 4:
+				koldop = 1				
+			elif sempty != 0:
 				koldop = 2
-			generate_new_numbers_in_array()
-	if gui_node != null && new_game != 0:
-		reasign_numbers_on_gamefield()
-	update_score()
-	is_undo_copied = false
-
-
+			check_game_condition()
+			if sempty == 0:
+				game_over()			
+	reasign_numbers_on_gamefield()	
+		   
+	
 func move_right(mas):
 #	print("func move_right(mas)")
 	randgen.randomize()
-
+	copy_gamefield()
 	var kody1 = 1
 	while kody1 == 1:
 		var sempty = 0
-		for rowy in range(game_field_size):
-			
-			for colx in range(game_field_size-1):
-				
+		for rowy in range(game_field_size):			
+			for colx in range(game_field_size-1):				
 				if mas[rowy][colx] != 0:
 					if mas[rowy][colx+1] == 0:
 						kody1+=1
@@ -755,30 +614,25 @@ func move_right(mas):
 			kody1 = 1
 		else:
 			kody1 = 0
-			if sempty == 0:
-				game_over()
-			elif sempty <= 4:
-				koldop = 1
-				
-			else:
+			if sempty <= 4:
+				koldop = 1				
+			elif sempty != 0:
 				koldop = 2
-			generate_new_numbers_in_array()
-	if gui_node != null && new_game != 0:
-		reasign_numbers_on_gamefield()
-	update_score()
-	is_undo_copied = false
+			check_game_condition()
+			if sempty == 0:
+				game_over()			
+	reasign_numbers_on_gamefield()	
+
 
 func move_left(mas):
 #	print("func move_left(mas)")
 	randgen.randomize()
-
+	copy_gamefield()
 	var kody2 = 1
 	while kody2 == 1:
 		var sempty = 0
-		for rowy in range(game_field_size):
-			
-			for colx in range(1, game_field_size):
-				
+		for rowy in range(game_field_size):			
+			for colx in range(1, game_field_size):				
 				if mas[rowy][game_field_size-colx] != 0:
 					if mas[rowy][game_field_size-colx-1]== 0:
 						kody2+=1
@@ -800,19 +654,16 @@ func move_left(mas):
 						mas[rowy][game_field_size-colx] =  0
 				else:
 					sempty += 1
-											
 		if kody2 > 1:
 			kody2 = 1
 		else:
 			kody2 = 0
-			if sempty == 0:
-				game_over()
-			elif sempty <= 4:
-				koldop = 1
-			else:
+			if sempty <= 4:
+				koldop = 1				
+			elif sempty != 0:
 				koldop = 2
-			generate_new_numbers_in_array()
-	if gui_node != null && new_game != 0:
-		reasign_numbers_on_gamefield()
-	update_score()
-	is_undo_copied = false
+			check_game_condition()
+			if sempty == 0:
+				game_over()			
+	reasign_numbers_on_gamefield()	
+	   
