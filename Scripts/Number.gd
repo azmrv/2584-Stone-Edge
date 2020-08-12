@@ -8,7 +8,7 @@ signal change_number
 # onready var alpha = get_node("alpha_tween")
 # onready var timer = get_node("destroy_timer")
 var is_number_exist = false
-var number = null
+var number = 0
 var mas_coord = 0
 
 var colors = []
@@ -60,18 +60,15 @@ func do_graz_2584():
 		Main.reasign_numbers_on_gamefield()
 	else:
 		return
-	
 
 
 func do_graz_adsoff():
 	print("pozdr s 7778742049 no ads for you")
-	
 
 
 func check_gz():
 	if Main.fibarr.has(number):
 		is_2584 == true
-	
 
 
 func set_empty_number():
@@ -79,7 +76,7 @@ func set_empty_number():
 	check_gz()
 	$CenterContainer/Label.text = ''
 	is_number_exist = null
-	number = null
+	number = 0
 	set_color()	
 
 func set_number_fonts_size():
@@ -91,7 +88,7 @@ func set_number_text(text):
 	check_gz()
 	$CenterContainer/Label.text = text
 	is_number_exist = 1
-	number = null
+	number = 0
 	set_color()	
 	
 func setup_number_rect(size : Vector2):
@@ -312,7 +309,7 @@ func set_color_darker():
 #	var prevnumber
 #	if Main.fibn(number) 
 	
-	if number == null:				
+	if number == 0:				
 		select_node_to_color(Color( 0.3, 0.3, 0.3, 0.3 ))
 	elif number == 1 :
 		select_node_to_color("7ca66d")
@@ -353,11 +350,13 @@ func set_color_darker():
 	elif number == 6765 :
 		select_node_to_color("9403cf")
 	elif number == -377 :
-		select_node_to_color("d6048a")
+		select_node_to_color("9403cf")
 	elif number == -610 :
+		select_node_to_color("d6048a")
+	elif number == -987 :
 		select_node_to_color("d6056c")	
 	else:
-		select_node_to_color("d62147")
+		select_node_to_color("004cff")
 	
 
 
@@ -365,8 +364,8 @@ func set_color_darker():
 func set_color_bright():
 	#print("set_color() number =", number)
 	#0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765, 10946, 17711
-	if number == null:				
-		select_node_to_color("838383")
+	if number == 0:				
+		select_node_to_color(Color( 0.5, 0.5, 0.5, 0.2 ))
 	elif number == 1 :
 		select_node_to_color("fb7d7d")
 	elif number == 2 :
@@ -415,7 +414,6 @@ func set_color_bright():
 		select_node_to_color("d6048a")
 	elif number == -987 :
 		select_node_to_color("d6056c")	
-	
 	else:
 		select_node_to_color("004cff")
 	

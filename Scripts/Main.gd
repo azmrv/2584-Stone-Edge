@@ -497,7 +497,8 @@ func show_background_node(bl:bool):
 
 func move_down(mas):
 #	print("func move_down(mas)")
-	randgen.randomize()	
+	randgen.randomize()
+	copy_gamefield()
 	var kodx1 = 1
 	while kodx1 == 1:
 		var sempty = 0
@@ -540,6 +541,7 @@ func move_down(mas):
 func move_up(mas):
 #	print("func move_up(mas)")
 	randgen.randomize()
+	copy_gamefield()
 	var kodx2 = 1
 	while kodx2 == 1:
 		var sempty = 0
@@ -582,6 +584,7 @@ func move_up(mas):
 func move_right(mas):
 #	print("func move_right(mas)")
 	randgen.randomize()
+	copy_gamefield()
 	var kody1 = 1
 	while kody1 == 1:
 		var sempty = 0
@@ -624,13 +627,12 @@ func move_right(mas):
 func move_left(mas):
 #	print("func move_left(mas)")
 	randgen.randomize()
+	copy_gamefield()
 	var kody2 = 1
 	while kody2 == 1:
 		var sempty = 0
-		for rowy in range(game_field_size):
-			
-			for colx in range(1, game_field_size):
-				
+		for rowy in range(game_field_size):			
+			for colx in range(1, game_field_size):				
 				if mas[rowy][game_field_size-colx] != 0:
 					if mas[rowy][game_field_size-colx-1]== 0:
 						kody2+=1
@@ -651,7 +653,7 @@ func move_left(mas):
 						mas[rowy][game_field_size-colx-1] = mas[rowy][game_field_size-colx-1] + mas[rowy][game_field_size-colx]
 						mas[rowy][game_field_size-colx] =  0
 				else:
-					sempty += 1											
+					sempty += 1
 		if kody2 > 1:
 			kody2 = 1
 		else:

@@ -16,9 +16,9 @@ var testAdBannerId = "ca-app-pub-3940256099942544/6300978111"
 var testAdInterstitialId = "ca-app-pub-3940256099942544/1033173712"
 var testAdRewardedId = "ca-app-pub-3940256099942544/5224354917"
 
-var adBannerId = "ca-app-pub-2510925268933160/8589091487"
-var adInterstitialId = "ca-app-pub-2510925268933160/6596531152"
-var adRewardedId = "ca-app-pub-2510925268933160/3714931537"
+var adBannerId = "ca-app-pub-2510925268933160/7912376007"
+var adInterstitialId = "ca-app-pub-2510925268933160/5286212668"
+var adRewardedId = "ca-app-pub-2510925268933160/6517750897"
 
 var useBanner = true
 var useInterstitial = true

@@ -41,6 +41,8 @@ func setup():
 
 
 func _input(event):
+	if(Input.is_key_pressed(KEY_F12)):
+		Utility.take_screenshot()
 	if (Main.new_game != 0) && (Main.clickInput == true):
 		#print("_input(event)", event)
 		if(Input.is_action_just_pressed("ui_touch")):
@@ -80,8 +82,7 @@ func _calculate_swipe(swipe_end):
 		if swipe.y < 0:
 			Main.move_up(Main.game_field)
 
-func calculate_direction():
-	
+func calculate_direction():	
 	var k_scr = (game_window_heigth_y - game_window_width_x)/2
 #	print("calculate_direction()")
 #	print("y =", final_touch.y, " x =", final_touch.x)	

@@ -115,20 +115,20 @@ func _on_Psyontech_pressed() -> void:
 
 func _on_Undo_pressed() -> void:
 	emit_signal("gui_undo")	
+	show_message("Undo activated")
 	AdsManager.showRewardedVideo()
 	Main.undo()
 
 
 func _on_MenuB_pressed() -> void:
 	Main.new_game = 0
-
 	$Menu.show()
 
 
 func _on_Restart_pressed() -> void:
-	Main.new_game = 1
-	update_score()
+	Main.new_game = 1	
 	AdsManager.showBanner()
+	show_message("New Game!")
 	Main.new_game()
 	$Menu.hide()
 
@@ -147,26 +147,28 @@ func _on_ToggleTheme_pressed() -> void:
 	if Main.is_dark == false && $Menu/CRect/CenterContainer/VBox/ToggleTheme.pressed == false:
 		$Menu/CRect/CenterContainer/VBox/ToggleTheme.pressed = false
 		$Menu/CRect/CenterContainer/VBox/ToggleTheme.text = "Dark"
-		Main.is_dark = true	
-		print("Mode %s" % Main.clickInput)
+		Main.is_dark = true
+		show_message("Dark theme activated")		
 	if Main.is_dark == true && $Menu/CRect/CenterContainer/VBox/ToggleTheme.pressed == true:
 		$Menu/CRect/CenterContainer/VBox/ToggleTheme.pressed = true
 		$Menu/CRect/CenterContainer/VBox/ToggleTheme.text = "Bright"
 		Main.is_dark = false
-		print("Mode %s" % Main.clickInput)
+		show_message("Bright theme activated")
+	Main.reasign_numbers_on_gamefield()
+	$Menu.hide()
 
 
 func _on_ClickMode_pressed() -> void:
-	print("GUI Change click mode")	
+	#print("GUI Change click mode")	
 	if Main.clickInput == true && $Menu/CRect/CenterContainer/VBox/ClickMode.pressed == false:
 		$Menu/CRect/CenterContainer/VBox/ClickMode.text = "Click Mode OFF"
-		Main.clickInput = false		
-		print("Mode %s" % Main.clickInput)
+		Main.clickInput = false
+		show_message("Click Mode OFF")
 	elif Main.clickInput == false && $Menu/CRect/CenterContainer/VBox/ClickMode.pressed == true:
 		$Menu/CRect/CenterContainer/VBox/ClickMode.text = "Click Mode ON"
 		Main.clickInput = true
-		print("Mode %s" % Main.clickInput)
-	
+		show_message("Click Mode ON")
+	$Menu.hide()
 
 
 func _on_Options_pressed() -> void:
@@ -187,6 +189,7 @@ func _on_AI_pressed() -> void:
 	Main.new_game = 1
 	$Menu/CRect/CenterContainer/VBox/AI.text = "10 turns AI"
 	$Menu.hide()
+	show_message("AI make 10 turns for you!")
 	AdsManager.showRewardedVideo()
 	# temporary ?
 	Main.ai_turns(10)
@@ -210,6 +213,8 @@ func _on_Help_pressed() -> void:
 func _on_CloseHelpM_pressed() -> void:
 	Main.new_game = 1
 	$HelpM.hide()
+
+
 func _on_GameOverT_timeout() -> void:
 	$MessPU.hide()
 	$VBoxC/Menu/VBox/Buttons.visible = true

@@ -53,9 +53,6 @@ func _on_NewGame_pressed() -> void:
 	AdsManager.showInterstitial()
 	Main.new_game()
 
-#	$WaitForADs.wait_time = 0.3
-#	$WaitForADs.one_shot = true
-#	$WaitForADs.start()
 
 func _on_WaitForADs_timeout() -> void:
 	$PopUp.visible = false
